@@ -114,12 +114,12 @@ namespace Lwj_stl{
         //配置并构造一个节点，带有元素值
         link_type create_node(const T& x){
             link_type p=get_node();
-            construct(&p->data,x);
+            Lwj_stl::construct(&p->data,x);
             return p;
         }
         //析构并释放一个节点
         void destroy_node(link_type p){
-            destroy(&p->data);
+            Lwj_stl::destroy(&p->data);
             put_node(p);
         }
         
@@ -171,7 +171,7 @@ namespace Lwj_stl{
             while(current != node){//遍历每一个节点
                 link_type tmp=current;
                 current=(link_type)current->next;
-                destroy(tmp);
+                Lwj_stl::destroy(tmp);
             }
             //恢复node原始状态
             node->next=node;
@@ -179,7 +179,7 @@ namespace Lwj_stl{
         }
         
         //将数值为value的所有元素移除 O(n)
-        void removve(const T& value){
+        void remove(const T& value){
             iterator first= begin();
             iterator last = end();
             while(first!=last){
