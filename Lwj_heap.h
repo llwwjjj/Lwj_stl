@@ -9,6 +9,8 @@
 #ifndef Lwj_heap_h
 #define Lwj_heap_h
 namespace Lwj_stl{
+    //-----------------------------------------------push_heap-------------------------------------------------------------
+    
     //先对vector进行push_back后使用push_heap进行调度
     template <class RandomAccessIterator>
     inline void push_heap(RandomAccessIterator first,RandomAccessIterator last){
@@ -30,25 +32,34 @@ namespace Lwj_stl{
         *(first+holeIndex)=value;//新值给洞值
     }
     
-    
-    
-    //首先设定欲调整值为尾值，然后将首值调整置尾节点，然后重整
-    template <class RandomAccessIterator>
-    inline void pop_heap(RandomAccessIterator first,RandomAccessIterator last){
-        __pop_heap_aux(first,last,value_type(first));
+    template <class RandomAccessIterator, class Distance, class T, class Compare>
+    void __push_heap(RandomAccessIterator first, Distance holeIndex,
+                     Distance topIndex, T value, Compare comp) {
+        Distance parent = (holeIndex - 1) / 2;
+        while (holeIndex > topIndex && comp(*(first + parent), value)) {
+            *(first + holeIndex) = *(first + parent);
+            holeIndex = parent;
+            parent = (holeIndex - 1) / 2;
+        }
+        *(first + holeIndex) = value;
     }
     
-    template<class RandomAccessIterator,class T>
-    inline void __pop_heap_aux(RandomAccessIterator first,RandomAccessIterator last,T*){
-        __pop_heap(first,last-1,last-1,T(*(last-1)),distance_type(first));
+    template <class RandomAccessIterator, class Compare, class Distance, class T>
+    inline void __push_heap_aux(RandomAccessIterator first,
+                                RandomAccessIterator last, Compare comp,
+                                Distance*, T*) {
+        __push_heap(first, Distance((last - first) - 1), Distance(0),
+                    T(*(last - 1)), comp);
     }
     
-    template<class RandomAccessIterator,class Distance,class T>
-    inline void __pop_heap(RandomAccessIterator first,RandomAccessIterator last,RandomAccessIterator result,T value,Distance holeIndex){
-        *result=*first;//设定尾值为首值，又pop_back()取出尾值
-        __adjust_heap(first,Distance(0),Distance(last-first),value);//重新调整
+    template <class RandomAccessIterator, class Compare>
+    inline void push_heap(RandomAccessIterator first, RandomAccessIterator last,
+                          Compare comp) {
+        __push_heap_aux(first, last, comp, distance_type(first), value_type(first));
     }
     
+    
+    //--------------------------------------------------adjust_heap---------------------------------------------------------
     
     template<class RandomAccessIterator,class Distance,class T>
     void __adjust_heap(RandomAccessIterator first,Distance holeIndex,Distance len,T value){
@@ -71,11 +82,79 @@ namespace Lwj_stl{
         __push_heap(first, holeIndex, topIndex, value);//可能此时尚未满足次序特性，需要执行一次push_heap操作
     }
     
+    
+    template <class RandomAccessIterator, class Distance, class T, class Compare>
+    void __adjust_heap(RandomAccessIterator first, Distance holeIndex,
+                       Distance len, T value, Compare comp) {
+        Distance topIndex = holeIndex;
+        Distance secondChild = 2 * holeIndex + 2;
+        while (secondChild < len) {
+            if (comp(*(first + secondChild), *(first + (secondChild - 1))))
+                secondChild--;
+            *(first + holeIndex) = *(first + secondChild);
+            holeIndex = secondChild;
+            secondChild = 2 * (secondChild + 1);
+        }
+        if (secondChild == len) {
+            *(first + holeIndex) = *(first + (secondChild - 1));
+            holeIndex = secondChild - 1;
+        }
+        __push_heap(first, holeIndex, topIndex, value, comp);
+    }
+    
+   //--------------------------------------------------pop_heap------------------------------------------------------------
+   
+    //首先设定欲调整值为尾值，然后将首值调整置尾节点，然后重整
+    template <class RandomAccessIterator>
+    inline void pop_heap(RandomAccessIterator first,RandomAccessIterator last){
+        __pop_heap_aux(first,last,value_type(first));
+    }
+    
+    template<class RandomAccessIterator,class T>
+    inline void __pop_heap_aux(RandomAccessIterator first,RandomAccessIterator last,T*){
+        __pop_heap(first,last-1,last-1,T(*(last-1)),distance_type(first));
+    }
+    
+    template<class RandomAccessIterator,class Distance,class T>
+    inline void __pop_heap(RandomAccessIterator first,RandomAccessIterator last,RandomAccessIterator result,T value,Distance holeIndex){
+        *result=*first;//设定尾值为首值，又pop_back()取出尾值
+        __adjust_heap(first,Distance(0),Distance(last-first),value);//重新调整
+    }
+    
+    template <class RandomAccessIterator, class T, class Compare, class Distance>
+    inline void __pop_heap(RandomAccessIterator first, RandomAccessIterator last,
+                           RandomAccessIterator result, T value, Compare comp,
+                           Distance*) {
+        *result = *first;
+        __adjust_heap(first, Distance(0), Distance(last - first), value, comp);
+    }
+    
+    template <class RandomAccessIterator, class T, class Compare>
+    inline void __pop_heap_aux(RandomAccessIterator first,
+                               RandomAccessIterator last, T*, Compare comp) {
+        __pop_heap(first, last - 1, last - 1, T(*(last - 1)), comp,
+                   distance_type(first));
+    }
+    
+    template <class RandomAccessIterator, class Compare>
+    inline void pop_heap(RandomAccessIterator first, RandomAccessIterator last,
+                         Compare comp) {
+        __pop_heap_aux(first, last, value_type(first), comp);
+    }
+
+    //--------------------------------------------------------------------------------------------------------------------------
+    
     template<class RandomAccessIterator>
     void sort_heap(RandomAccessIterator first,RandomAccessIterator last){
         //每执行一次pop_heap就把当前范围内最大值放尾端，且每次把范围减一
         while(last-first>1)
             pop_heap(first,last--);
+    }
+    
+    template <class RandomAccessIterator, class Compare>
+    inline void make_heap(RandomAccessIterator first, RandomAccessIterator last,
+                          Compare comp) {
+        __make_heap(first, last, comp, value_type(first), distance_type(first));
     }
     
     //将一段现有的数据转化为一个heap
@@ -93,18 +172,4 @@ namespace Lwj_stl{
     }
 }
 #endif /* Myheap_h */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
