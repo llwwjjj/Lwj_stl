@@ -126,7 +126,10 @@ namespace Lwj_stl{
         
         //构造函数之一，产生一个空链表
         Lwj_list(){empty_initialize();}
-        
+        ~Lwj_list() {
+            clear();
+            put_node(node);
+        }
     protected:
         void empty_initialize(){
             node=get_node();
@@ -167,7 +170,7 @@ namespace Lwj_stl{
         
         //清除所有节点 O(n)
         void clear(){
-            link_type current=begin();
+            link_type current=(link_type) node->next;
             while(current != node){//遍历每一个节点
                 link_type tmp=current;
                 current=(link_type)current->next;
