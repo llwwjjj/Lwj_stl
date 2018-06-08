@@ -35,15 +35,15 @@ namespace Lwj_stl {
             iterator new_finish = new_start;
             try {
                 new_finish = uninitialized_copy(start, position, new_start);
-                construct(new_finish, x);
+                Lwj_stl::construct(new_finish, x);
                 ++new_finish;
             }
             catch (...) {
-                destroy(new_start, new_finish);
+                Lwj_stl::destroy(new_start, new_finish);
                 data_allocator::deallocate(new_start, len);
                 throw;
             }
-            destroy(begin(), end());
+            Lwj_stl::destroy(begin(), end());
             deallocate();
             
             start = new_start;
@@ -73,14 +73,14 @@ namespace Lwj_stl {
         Lwj_vector(long n, const T& value) { fill_initialize(n, value); }
         explicit Lwj_vector(size_type n) { fill_initialize(n, T()); }
         ~Lwj_vector() {
-            destroy(start, finish);
+            Lwj_stl::destroy(start, finish);
             deallocate();
         }
         reference feont() { return *begin(); }        //第一个元素
         reference back() { return (*end() - 1); }    //最后一个元素
         void push_back(const T& x) {
             if (finish != end_of_storage) {
-                construct(finish, x);
+                Lwj_stl::construct(finish, x);
                 ++finish;
             }
             else
@@ -88,13 +88,13 @@ namespace Lwj_stl {
         }
         void pop_back() {
             --finish;
-            destory(finish);
+            Lwj_stl::destroy(finish);
         }
         iterator erase(iterator position) {//清除某位置上的元素
             if (position + 1 != end())
                 copy(position + 1, finish, position);
             --finish;
-            destory(finish);
+            Lwj_stl::destroy(finish);
             return position;
         }
         void resize(size_type new_size, const T& x) {
@@ -106,7 +106,7 @@ namespace Lwj_stl {
     protected:
         iterator allocate_and_fill(size_type n, const T& x) {
             iterator result = data_allocator::allocate(n);
-            uninitialized_fill_n(result, n, x);
+            Lwj_stl::uninitialized_fill_n(result, n, x);
             return result;
         }
     public:
@@ -117,15 +117,15 @@ namespace Lwj_stl {
                     const size_type elems_after = finish - position;
                     iterator old_finish = finish;
                     if (elems_after > n) {//插入点之后的鲜鱿元素个数大于新增元素个数
-                        uninitialized_copy(finish - n, finish, finish);
+                        Lwj_stl::uninitialized_copy(finish - n, finish, finish);
                         finish += n;
                         copy_backward(position, old_finish - n, old_finish);
                         fill(position, position + n, x_copy);
                     }
                     else {//插入点之后的现有元素个数小于等于新增元素个数
-                        uninitialized_fill_n(finish, n - elems_after, x_copy);
+                        Lwj_stl::uninitialized_fill_n(finish, n - elems_after, x_copy);
                         finish += n - elems_after;
-                        uninitialized_copy(position, old_finish, finish);
+                        Lwj_stl::uninitialized_copy(position, old_finish, finish);
                         finish += elems_after;
                         fill(position, old_finish, x_copy);
                     }
@@ -143,11 +143,11 @@ namespace Lwj_stl {
                         new_finish = uninitialized_copy(position, finish, new_finish);
                     }
                     catch (...) {
-                        destory(new_start, new_finish);
+                        Lwj_stl::destroy(new_start, new_finish);
                         data_allocator::deallocate(new_start, len);
                         throw;
                     }
-                    destory(begin(), end());
+                    Lwj_stl::destroy(begin(), end());
                     deallocate();
                     
                     start = new_start;
