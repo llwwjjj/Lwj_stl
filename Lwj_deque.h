@@ -131,8 +131,8 @@ namespace Lwj_stl{
     public:
         typedef T value_type;
         typedef value_type* pointer;
-        typedef const value_type* const_pointer;
         typedef value_type& reference;
+        typedef const value_type* const_pointer;
         typedef const value_type& const_reference;
         typedef ptrdiff_t difference_type;
         typedef size_t size_type;
@@ -189,8 +189,14 @@ namespace Lwj_stl{
             start.set_node(nstart);
             finish.set_node(nfinish);
             start.cur=start.first;
-            finish.cur=finish.first;
-            }
+            finish.cur=finish.first+1;
+        }
+        
+        void destroy_map_and_nodes() {
+            for (map_pointer cur = start.node; cur <= finish.node; ++cur)
+                deallocate_node(*cur);
+            map_allocator::deallocate(map, map_size);
+        }
     
         Lwj_deque(): start(), finish(), map(0), map_size(0)
         // 以上 start() 和 finish() 喚起 iterator（亦即 __deque_iterator）
@@ -202,6 +208,12 @@ namespace Lwj_stl{
         Lwj_deque(int n,const value_type& value):start(),finish(),map(0),map_size(0){
             fill_initialized(n,value);
         }
+        
+        ~Lwj_deque() {
+         destroy(start, finish);
+         destroy_map_and_nodes();
+         }
+        
     private:
         pointer allocate_node() { return data_allocator::allocate(buffer_size()); }
         void deallocate_node(pointer n) {data_allocator::deallocate(n, buffer_size());}
@@ -244,14 +256,12 @@ namespace Lwj_stl{
             }
             else{
                 //若符合某种条件则必须重换一个map
-                if(map_size-(finish.node-map)>2)
+                if(map_size-(finish.node-map)<2)
                     reallocate_map(false);
                 *(finish.node+1)=allocate_node();
                 Lwj_stl::construct(finish.cur,t);
                 finish.set_node(finish.node+1);
                 finish.cur=finish.first;
-                
-                deallocate_node(*(finish.node+1));
             }
         }
         
