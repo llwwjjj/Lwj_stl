@@ -46,7 +46,7 @@ namespace Lwj_stl {
     __uninitialized_copy_aux(InputIterator first, InputIterator last, ForwardIterator result, __false_type) {
         ForwardIterator cur = result;
         for (; first != last; ++first, ++cur)
-            construct(&*cur, *first);//必须一个一个元素地构造，无法批量进行，安全但是慢
+            Lwj_stl::construct(&*cur, *first);//必须一个一个元素地构造，无法批量进行，安全但是慢
         return cur;
     }
     
@@ -97,7 +97,7 @@ namespace Lwj_stl {
         ForwardIterator cur = first;
         //    ...    (省略了异常处理)
         for (; n > 0; --n, ++cur)
-            construct(&* cur, x);
+            Lwj_stl::construct(&* cur, x);
         return cur;
     }
     
@@ -128,7 +128,7 @@ namespace Lwj_stl {
     inline void uninitialized_fill(ForwardIterator first, ForwardIterator last, const T& x, __false_type) {
         ForwardIterator cur = first;
         for (; cur != last; ++cur)
-            construct(&*cur, x);
+            Lwj_stl::construct(&*cur, x);
     }
     
     
