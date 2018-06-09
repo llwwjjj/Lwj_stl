@@ -134,7 +134,7 @@ namespace Lwj_stl{
         
         iterator begin() {return iterator((slist_node*)head.next);}
         iterator end() {return NULL;}
-        size_type size() const {return __Myslist_size(head.next);}
+        size_type size() const {return __slist_size(head.next);}
         bool empty() const{return head.next==NULL;}
         void clear() { erase_after(&head, 0); }
         
