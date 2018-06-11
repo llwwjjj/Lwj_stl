@@ -13,6 +13,7 @@
 #include "Lwj_construct.h"
 #include "Lwj_uninitialized.h"
 #include "Lwj_iterator.h"
+#include "Lwj_pair.h"
 #include <algorithm>
 
 namespace Lwj_stl{
@@ -262,7 +263,7 @@ namespace Lwj_stl{
     //-----------------------------------------------------插入操作---------------------------------------------------------------
     public:
         //将x插入到RB-Tree中，保持节点值独一无二
-        std::pair<iterator,bool> insert_unique(const value_type& v){//返回第二元素表示插入成功与否
+        Lwj_stl::pair<iterator,bool> insert_unique(const value_type& v){//返回第二元素表示插入成功与否
             link_type y=header;
             link_type x=root();
             bool comp=true;
@@ -275,13 +276,13 @@ namespace Lwj_stl{
             iterator j=iterator(y);
             if(comp){
                 if(j==begin())//插入点比树中任意键值都小
-                    return std::pair<iterator,bool>(__insert(x,y,v),true);
+                    return Lwj_stl::pair<iterator,bool>(__insert(x,y,v),true);
                 else
                     --j;//回头准备测试
             }
             if(key_compare(key(j.node),KeyOfValue()(v)))
-                return std::pair<iterator,bool>(__insert(x,y,v),true);
-            return std::pair<iterator,bool>(j,false);
+                return Lwj_stl::pair<iterator,bool>(__insert(x,y,v),true);
+            return Lwj_stl::pair<iterator,bool>(j,false);
         }
         
         
