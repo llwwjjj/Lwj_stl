@@ -140,7 +140,7 @@ namespace Lwj_stl{
     
     template<class Key,class Value,class KeyOfValue,class Compare,class Alloc=Lwj_stl::Lwj_alloc>
     class Lwj_rbtree{
-    protected:
+    public:
         typedef void* void_pointer;
         typedef __rb_tree_node_base* base_ptr;
         typedef __rb_tree_node<Value> rb_tree_node;
