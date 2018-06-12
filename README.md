@@ -366,3 +366,52 @@ std::stack<int,std::deque<int>>                  | 100,000     |3.705       |
 std::stack<int,std::deque<int>>                  | 1,000,000   |36.748      |
 std::stack<int,std::deque<int>>                  | 10,000,000  |367.485     |
 std::stack<int,std::deque<int>>                  | 100,000,000 |3600.53     |
+
+3.6 Lwj_stack.h
+------------------
+* [先进先出]
+* [迭代器]
+   * 没有迭代器，因为queue允许末端新增元素，前端移除元素、也就是说queue不允许有遍历行为。
+* [容器类]
+   * 以某种既有容器尾底部结构
+   * 成员函数：empty，size,push,pop,front,back,operator=,operator<
+* [性能测试] 测试环境:Xcode
+   * 测试代码如下
+```cpp
+#include <time.h>
+#include <iostream>
+#include "Lwj_queue.h"
+#include "Lwj_list.h"
+#include "Lwj_deque.h"
+using namespace std;
+int main(int argc, const char * argv[]) {
+    Lwj_stl::Lwj_queue<int,Lwj_stl::Lwj_list<int>> q;
+    clock_t start = clock();
+    for(int i=0;i!=100000;++i)
+        q.push(i);
+    clock_t finish = clock();
+    cout<<double(finish-start)/ CLOCKS_PER_SEC*1000 <<endl;
+    return 0;
+}
+```
+```cpp
+
+```
+adapter.                                         |quantity     |time(ms)    |
+-------------------------------------------------|-------------|------------|
+Lwj_stl::Lwj_queue<int,Lwj_stl::Lwj_list<int>>   | 100,000     |4.638       |
+Lwj_stl::Lwj_queue<int,Lwj_stl::Lwj_list<int>>   | 1,000,000   |46.663      |
+Lwj_stl::Lwj_queue<int,Lwj_stl::Lwj_list<int>>   | 10,000,000  |471.375     |
+Lwj_stl::Lwj_queue<int,Lwj_stl::Lwj_list<int>>   | 100,000,000 |4644.18     | 
+Lwj_stl::Lwj_queue<int,Lwj_stl::Lwj_deque<int>>  | 100,000     |0.972       |
+Lwj_stl::Lwj_queue<int,Lwj_stl::Lwj_deque<int>>  | 1,000,000   |9.725       |
+Lwj_stl::Lwj_queue<int,Lwj_stl::Lwj_deque<int>>  | 10,000,000  |95.553      |
+Lwj_stl::Lwj_queue<int,Lwj_stl::Lwj_deque<int>>  | 100,000,000 |924.236     |   
+std::queue<int,std::list<int>>                   | 100,000     |11.701      |
+std::queue<int,std::list<int>>                   | 1,000,000   |116.98      |
+std::queue<int,std::list<int>>                   | 10,000,000  |1180.74     |
+std::queue<int,std::list<int>>                   | 100,000,000 |11739.6     |
+std::queue<int,std::deque<int>>                  | 100,000     |3.838       |
+std::queue<int,std::deque<int>>                  | 1,000,000   |44.797      |
+std::queue<int,std::deque<int>>                  | 10,000,000  |388.711     |
+std::queue<int,std::deque<int>>                  | 100,000,000 |3671.16     |
