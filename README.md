@@ -212,7 +212,7 @@ std::list            | 100,000,000 |12868.2     |
    * 成员函数：begin,end,size,empty,back,front,push_back,,push_front,pop_back,pop_front,insert,clear,erase，reallocate_map
 * [性能测试] 测试环境:Xcode
    * 测试代码如下
-   ```cpp
+```cpp
 #include <time.h>
 #include <iostream>
 #include "Lwj_deque.h"
@@ -227,9 +227,9 @@ int main(int argc, const char * argv[]) {
     cout<<double(finish-start)/ CLOCKS_PER_SEC*1000 <<endl;
     return 0;
 }
-   ```
+```
    
-   ```cpp
+```cpp
 #include <time.h>
 #include <iostream>
 #include "Lwj_deque.h"
@@ -244,4 +244,4 @@ int main(int argc, const char * argv[]) {
     cout<<double(finish-start)/ CLOCKS_PER_SEC*1000 <<endl;
     return 0;
 }
-   ```
+```
