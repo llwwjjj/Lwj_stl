@@ -96,5 +96,24 @@
 * [容器类]
    * 成员变量：三个迭代器，其中start表示目前使用空间的头，finish表示目前使用空间的尾，end_of_storage表示目前可用空间的尾。
    * 构造函数，析构函数
-   * 成员函数：begin,end,capacity,size,empty,operator[],back,front,push_back,pop_back,insert将
-   * push_back 如果finish=end_of_storage，则
+   * 成员函数：begin,end,capacity,size,empty,operator[],back,front,push_back,pop_back,insert
+   * push_back 如果finish=end_of_storage，则重新申请一个原空间而被大小的空间，复制过去并执行push过程。
+* [性能测试] 测试环境:Xcode
+   * 测试代码如下
+```cpp
+#include <time.h>
+#include <iostream>
+#include <string>
+#include "Lwj_vector.h"
+#include <vector>
+using namespace std;
+int main(int argc, const char * argv[]) {
+    Lwj_stl::Lwj_vector<int> v;
+    clock_t start = clock();
+    for(int i=0;i!=100000;++i)
+        v.push_back(i);
+    clock_t finish = clock();
+    cout<<double(finish-start)/ CLOCKS_PER_SEC*1000 <<endl;
+    return 0;
+}
+```
