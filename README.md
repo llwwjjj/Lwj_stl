@@ -340,7 +340,7 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 ```
-adapter.                                         |quantity     |time(ms)    |
+adapter                                          |quantity     |time(ms)    |
 -------------------------------------------------|-------------|------------|
 Lwj_stl::Lwj_stack<int,Lwj_stl::Lwj_vector<int>> | 100,000     |1.195       |
 Lwj_stl::Lwj_stack<int,Lwj_stl::Lwj_vector<int>> | 1,000,000   |11.505      |
@@ -411,7 +411,7 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 ```
-adapter.                                         |quantity     |time(ms)    |
+adapter                                          |quantity     |time(ms)    |
 -------------------------------------------------|-------------|------------|
 Lwj_stl::Lwj_queue<int,Lwj_stl::Lwj_list<int>>   | 100,000     |4.638       |
 Lwj_stl::Lwj_queue<int,Lwj_stl::Lwj_list<int>>   | 1,000,000   |46.663      |
@@ -429,3 +429,26 @@ std::queue<int,std::deque<int>>                  | 100,000     |3.838       |
 std::queue<int,std::deque<int>>                  | 1,000,000   |44.797      |
 std::queue<int,std::deque<int>>                  | 10,000,000  |388.711     |
 std::queue<int,std::deque<int>>                  | 100,000,000 |3671.16     |
+
+
+3.7 Lwj_heap.h
+------------------
+* [不归属于STL容器组件]
+* [迭代器]
+   * 没有迭代器，因为heap的所有元素都必须遵循特别的排列规则，所以heap不提供遍历功能。
+* [heap算法]
+   * push_heap
+   * pop_heap
+   * sort_heap
+   * make_heap
+   
+ 
+ 3.8 Lwj_priority_queue.h
+--------------------------
+* [权值最高者，排在最前面]
+* [迭代器]
+   * 没有迭代器，因为进出都有一定的规则，只有queue顶端的元素才有机会被外界去用，不提供遍历功能。
+* [容器类]
+   * 缺省情况下是以vector为底部容器
+   
+   
