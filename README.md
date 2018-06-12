@@ -153,6 +153,22 @@ std::vector          | 100,000,000 |2408.51     |
    * 成员变量：只包含一个指向节点的指针，因为list是环状双向链表。
    * 构造函数，析构函数
    * 成员函数：begin,end,size,empty,get_node,put_node,destory_node,back,front,push_back,,push_front,pop_back,pop_front,insert,clear,remove,unique,transfer,splice,merge,reverse,sort
-   * push_back 如果finish=end_of_storage，则重新申请一个原空间而被大小的空间，复制过去并执行push过程。
 * [性能测试] 测试环境:Xcode
    * 测试代码如下
+```cpp
+#include <time.h>
+#include <iostream>
+#include "Lwj_list.h"
+#include <list>
+using namespace std;
+int main(int argc, const char * argv[]) {
+    Lwj_stl::Lwj_list<int> l;
+    Lwj_stl::Lwj_list<int>::iterator it=l.begin();
+    clock_t start = clock();
+    for(int i=0;i!=100000;++i)
+        l.insert(it,i);
+    clock_t finish = clock();
+    cout<<double(finish-start)/ CLOCKS_PER_SEC*1000 <<endl;
+    return 0;
+}
+```
