@@ -103,7 +103,6 @@
 ```cpp
 #include <time.h>
 #include <iostream>
-#include <string>
 #include "Lwj_vector.h"
 #include <vector>
 using namespace std;
@@ -117,3 +116,23 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 ```
+```cpp
+#include <time.h>
+#include <iostream>
+#include "Lwj_vector.h"
+#include <vector>
+using namespace std;
+int main(int argc, const char * argv[]) {
+    vector<int> v;
+    clock_t start = clock();
+    for(int i=0;i!=100000;++i)
+        v.push_back(i);
+    clock_t finish = clock();
+    cout<<double(finish-start)/ CLOCKS_PER_SEC*1000 <<endl;
+    return 0;
+}
+```
+表头1  | 表头2|
+--------- | --------|
+表格单元  | 表格单元 |
+表格单元  | 表格单元 |
