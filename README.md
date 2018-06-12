@@ -33,7 +33,7 @@
 
 
 
-Lwj_alloc.h
+1.1 Lwj_alloc.h
 ------
 * [allocate] 用于空间的配置
    * 默认使用第二级配置器，维护16个自由链表，链表大小为8，16，24，32，40，48，56，64，72，80，88，96，104，112，120，128和一个内存池
@@ -52,7 +52,7 @@ Lwj_alloc.h
 
 
 
-Lwj_construct.h
+1.2 Lwj_construct.h
 ------
 * [construct] 负责对象的构造
    * 使用placement new
@@ -62,7 +62,7 @@ Lwj_construct.h
    
    
    
-Lwj_uninitialized.h 
+1.3 Lwj_uninitialized.h 
 ------   
 * [uninitialized_copy] 在区间上构造元素
    * 首先判断迭代器类型是否为char* 和 wchar_t* 是则用内存底层操作memove，速度极快。
@@ -77,9 +77,8 @@ Lwj_uninitialized.h
    * 首先萃取出迭代器的value_type，使用type_traits判断是否为POD类型
       * 是则调用STL算法fill实现拷贝
       * 不是则一个一个元素地构造，无法批量进行      
-   ```cpp
-      string &operator+(const string& A,const string& B) //cpp
-   ```
-   
-标题
-------
+  
+  
+  
+2.1 vector.h
+--------------------
