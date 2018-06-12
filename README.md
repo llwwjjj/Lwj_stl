@@ -3,7 +3,7 @@
 开发环境：Xcode
 
 目录
-------
+-------------
 * [项目组件]
     * 内存配置
       * Lwj_uninitialized.h
@@ -34,7 +34,7 @@
 
 
 1.1 Lwj_alloc.h
-------
+------------------
 * [allocate] 用于空间的配置
    * 默认使用第二级配置器，维护16个自由链表，链表大小为8，16，24，32，40，48，56，64，72，80，88，96，104，112，120，128和一个内存池
    * 调用allocate时：
@@ -53,7 +53,7 @@
 
 
 1.2 Lwj_construct.h
-------
+---------------------
 * [construct] 负责对象的构造
    * 使用placement new
 * [destory] 负责对象的析构
@@ -63,7 +63,7 @@
    
    
 1.3 Lwj_uninitialized.h 
-------   
+------------------------
 * [uninitialized_copy] 在区间上构造元素
    * 首先判断迭代器类型是否为char* 和 wchar_t* 是则用内存底层操作memove，速度极快。
    * 萃取出迭代器的value_type，使用type_traits判断是否为POD类型
@@ -80,5 +80,21 @@
   
   
   
-2.1 vector.h
---------------------
+2.1 LWj_traits.h & Lwj_iterator
+----------------------------------
+* [traits]
+   * 为了提供通用的操作而又不损失效率，用到的一种特殊的技巧；通过定义一些结构体或类，并利用模板类特化和偏特化的能力，给类型赋予一些特性，这些特性根据类型的不同而异。可以使用这些traits来判断一个类型的一些特性，引发c++函数的重载机制，实现同一种操作因类型不同而异的效果。traits极度弥补了c++语言的不足。
+* [iterator]
+   * iterator_traits
+   
+ 
+
+3.1 Lwj_vector.h
+------------------
+* [迭代器]
+   * vector维护的是一个连续线性空间，所以不论其元素类型是什么，普通指针都可以作为它的迭代器，Random Access Iterators
+* [容器类]
+   * 成员变量：三个迭代器，其中start表示目前使用空间的头，finish表示目前使用空间的尾，end_of_storage表示目前可用空间的尾。
+   * 构造函数，析构函数
+   * 成员函数：begin,end,capacity,size,empty,operator[],back,front,push_back,pop_back,insert将
+   * push_back 如果finish=end_of_storage，则
