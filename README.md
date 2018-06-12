@@ -367,7 +367,7 @@ std::stack<int,std::deque<int>>                  | 1,000,000   |36.748      |
 std::stack<int,std::deque<int>>                  | 10,000,000  |367.485     |
 std::stack<int,std::deque<int>>                  | 100,000,000 |3600.53     |
 
-3.6 Lwj_stack.h
+3.6 Lwj_queue.h
 ------------------
 * [先进先出]
 * [迭代器]
