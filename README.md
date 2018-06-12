@@ -245,3 +245,13 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 ```
+contianer            |quantity     |time(ms)    |
+---------------------|-------------|------------|
+Lwj_stl::Lwj_deque   | 100,000     |0.85        |
+Lwj_stl::Lwj_deque   | 1,000,000   |8.506       |
+Lwj_stl::Lwj_deque   | 10,000,000  |85.481      |
+Lwj_stl::Lwj_deque   | 100,000,000 |836.061     |
+std::deque           | 100,000     |3.105       |
+std::deque           | 1,000,000   |29.833      |
+std::deque           | 10,000,000  |299.025     |
+std::deque           | 100,000,000 |2910.16     |
