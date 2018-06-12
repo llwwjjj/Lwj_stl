@@ -479,6 +479,7 @@ std::queue<int,std::deque<int>>                  | 100,000,000 |3671.16     |
 4.2 Lwj_set.h
 --------------------------
 * [键值=实值]
+* [不允许两个元素值相同]
 * [迭代器]
    * 不能通过迭代器改变set元素值，因为set元素值就是键值，关系到set元素的排列规则，也就是说set的迭代器是constant iterators
 * [容器类]
@@ -486,3 +487,19 @@ std::queue<int,std::deque<int>>                  | 100,000,000 |3671.16     |
    * 构造函数，析构函数
    * 成员函数：key_comp,begin,end,empty,size,max_size
              insert(insert_unique)均以rbtree的成员函数来实现
+   * 默认以less<>比较键值，所以元素必须满足可以用<来比较
+   
+   
+   
+4.3 Lwj_map.h
+--------------------------
+* [键值不等于实值]
+* [不允许两个元素拥有相同的键值]
+* [迭代器]
+   * 不能通过迭代器改变map的键值，但可以改变map的实值。
+* [容器类]
+   * 包含一个rbtree
+   * 构造函数，析构函数
+   * 成员函数：key_comp,begin,end,empty,size,max_size，operator[]
+             insert(insert_unique)均以rbtree的成员函数来实现
+   * 默认以less<>比较键值，所以元素必须满足可以用<来比较
