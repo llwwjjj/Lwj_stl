@@ -142,3 +142,17 @@ std::vector          | 100,000     |2.326       |
 std::vector          | 1,000,000   |22.257      |
 std::vector          | 10,000,000  |265.646     |
 std::vector          | 100,000,000 |2408.51     |
+
+3.1 Lwj_list.h
+------------------
+* [节点]
+   * 包含一个指向前节点的指针，一个指向后节点的指针和数据
+* [迭代器]
+   * 包含一个指向节点的指针，实现== != * -> ++ -- 操作符
+* [容器类]
+   * 成员变量：只包含一个指向节点的指针，因为list是环状双向链表。
+   * 构造函数，析构函数
+   * 成员函数：begin,end,size,empty,get_node,put_node,destory_node,back,front,push_back,,push_front,pop_back,pop_front,insert,clear,remove,unique,transfer,splice,merge,reverse,sort
+   * push_back 如果finish=end_of_storage，则重新申请一个原空间而被大小的空间，复制过去并执行push过程。
+* [性能测试] 测试环境:Xcode
+   * 测试代码如下
