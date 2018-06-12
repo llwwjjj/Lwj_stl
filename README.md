@@ -53,6 +53,20 @@ Lwj_construct.h
    * 使用type_traits判断元素的数值类型是否有trival_destructor，做不同处理。
    * 针对迭代器为char* 和 wchar_t* 实施特化版
    
+Lwj_uninitialized.h
+* [uninitialized_copy] 在区间上构造元素
+   * 首先判断迭代器类型是否为char* 和 wchar_t* 是则用内存底层操作memove，速度极快。
+   * 萃取出迭代器的value_type，使用type_traits判断是否为POD类型
+      * 是则调用STL算法copy实现拷贝
+      * 不是则一个一个元素地构造，无法批量进行
+* [uninitialized_fill_n] 在区间上填充n个元素
+   * 首先萃取出迭代器的value_type，使用type_traits判断是否为POD类型
+      * 是则调用STL算法fill_n实现拷贝
+      * 不是则一个一个元素地构造，无法批量进行
+* [uninitialized_fill] 在区间first--end上填充元素
+   * 首先萃取出迭代器的value_type，使用type_traits判断是否为POD类型
+      * 是则调用STL算法fill实现拷贝
+      * 不是则一个一个元素地构造，无法批量进行      
    ```cpp
       string &operator+(const string& A,const string& B) //cpp
    ```
