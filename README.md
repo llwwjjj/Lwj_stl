@@ -460,10 +460,29 @@ std::queue<int,std::deque<int>>                  | 100,000,000 |3671.16     |
    * 如果节点为红，其子节点必须为黑
    * 任一节点值NULL的任何路径，所含黑节点数必须相同
 * [节点]
-   * 包含bool量为
+   * 包含一个bool量表示节点颜色
+   * 包含一个指向父节点的指针，一个指向左子节点的指针和一个指向右子节点的指针
+   * 包含一个数值
 * [迭代器]
-   * 包含一个指向节点的指针，实现== != * -> ++ 操作符,没有实现-- ，因为这是一个 forward iterator
+   * 包含一个指向节点的指针，实现++ -- * -> 其中前进和后退的实现过程需要特别注意，Bidirectional iterator
 * [容器类]
-   * 成员变量：包含一个节点
+   * 成员变量：包含一个header,root的父亲，它的父亲也是root，左子节点指向最小键值，右子节点指向最大键值；包含一个无符号整型变量表示节点数量，一个函数对象表示键值大小比较准则
    * 构造函数，析构函数
-   * 成员函数：begin,end,size,empty,back,f
+   * 成员函数：root,leftmost,rightmost
+             left,right,parent,value,key,color
+             minimum,maxmum,key_comp,begin,end,empty,size,max_size
+             insert_equal(允许节点值重复),insert_unique(保持节点值独一无二)
+   * insert_equal/insert_unique:先满足各自对个数的要求，同时找出插入的位置，再让新节点为红插入，然后调整红黑树结构(左旋转，右旋转)
+   * 1.插入节点的父节点为黑色 2.插入节点父节点为红，伯父节点为红 3.插入节点为黑，伯父节点为黑，外侧插入 4.插入节点为黑，伯父节点为黑，内侧插入
+
+
+4.2 Lwj_set.h
+--------------------------
+* [键值=实值]
+* [迭代器]
+   * 不能通过迭代器改变set元素值，因为set元素值就是键值，关系到set元素的排列规则，也就是说set的迭代器是constant iterators
+* [容器类]
+   * 包含一个rbtree
+   * 构造函数，析构函数
+   * 成员函数：key_comp,begin,end,empty,size,max_size
+             insert(insert_unique)均以rbtree的成员函数来实现
