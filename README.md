@@ -3,6 +3,7 @@
 开发环境：Xcode
 
 目录
+------
 * [项目组件]
     * 内存配置
       * Lwj_uninitialized.h
@@ -30,7 +31,10 @@
     * STL算法(尚未完成)
     
 
-Lwj_alloc.h空间配置器
+
+
+Lwj_alloc.h
+------
 * [allocate] 用于空间的配置
    * 默认使用第二级配置器，维护16个自由链表，链表大小为8，16，24，32，40，48，56，64，72，80，88，96，104，112，120，128和一个内存池
    * 调用allocate时：
@@ -46,14 +50,20 @@ Lwj_alloc.h空间配置器
    * 调用reallocate时：大于128个字节则直接调用realloc。
 * [simple_alloc] 接口，便于容器使用底层的空间配置函数
 
+
+
 Lwj_construct.h
+------
 * [construct] 负责对象的构造
    * 使用placement new
 * [destory] 负责对象的析构
    * 使用type_traits判断元素的数值类型是否有trival_destructor，做不同处理。
    * 针对迭代器为char* 和 wchar_t* 实施特化版
    
-Lwj_uninitialized.h
+   
+   
+Lwj_uninitialized.h 
+------   
 * [uninitialized_copy] 在区间上构造元素
    * 首先判断迭代器类型是否为char* 和 wchar_t* 是则用内存底层操作memove，速度极快。
    * 萃取出迭代器的value_type，使用type_traits判断是否为POD类型
@@ -71,3 +81,5 @@ Lwj_uninitialized.h
       string &operator+(const string& A,const string& B) //cpp
    ```
    
+标题
+------
