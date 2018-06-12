@@ -152,7 +152,7 @@ std::vector          | 100,000,000 |2408.51     |
 * [容器类]
    * 成员变量：只包含一个指向节点的指针，因为list是环状双向链表。
    * 构造函数，析构函数
-   * 成员函数：begin,end,size,empty,get_node,put_node,destory_node,back,front,push_back,,push_front,pop_back,pop_front,insert,clear,remove,unique,transfer,splice,merge,reverse,sort
+   * 成员函数：begin,end,size,empty,get_node,put_node,destroy_node,back,front,push_back,,push_front,pop_back,pop_front,insert,clear,remove,unique,transfer,splice,merge,reverse,sort
 * [性能测试] 测试环境:Xcode
    * 测试代码如下
 ```cpp
@@ -255,3 +255,40 @@ std::deque           | 100,000     |3.105       |
 std::deque           | 1,000,000   |29.833      |
 std::deque           | 10,000,000  |299.025     |
 std::deque           | 100,000,000 |2910.16     |
+
+3.4 Lwj_slist.h
+------------------
+* [节点]
+   * 包含一个指向后节点的指针和数据
+* [迭代器]
+   * 包含一个指向节点的指针，实现== != * -> ++ 操作符,没有实现-- ，因为这是一个 forward iterator
+* [容器类]
+   * 成员变量：包含一个节点
+   * 构造函数，析构函数
+   * 成员函数：begin,end,size,empty,back,front,push_front,pop_front,insert,clear，create_node,destroy_node,swap
+   
+* [性能测试] 测试环境:Xcode
+   * 测试代码如下
+```cpp
+#include <time.h>
+#include <iostream>
+#include "Lwj_slist.h"
+#include <deque>
+using namespace std;
+int main(int argc, const char * argv[]) {
+    Lwj_stl::Lwj_slist<int> s;
+    clock_t start = clock();
+    for(int i=0;i!=100000;++i)
+        s.push_front(i);
+    clock_t finish = clock();
+    cout<<double(finish-start)/ CLOCKS_PER_SEC*1000 <<endl;
+    return 0;
+}
+
+```
+contianer            |quantity     |time(ms)    |
+---------------------|-------------|------------|
+Lwj_stl::Lwj_deque   | 100,000     |2.931       |
+Lwj_stl::Lwj_deque   | 1,000,000   |29.414      |
+Lwj_stl::Lwj_deque   | 10,000,000  |292.182     |
+Lwj_stl::Lwj_deque   | 100,000,000 |3049.57     |
