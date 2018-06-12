@@ -172,3 +172,30 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 ```
+```cpp
+#include <time.h>
+#include <iostream>
+#include "Lwj_list.h"
+#include <list>
+using namespace std;
+int main(int argc, const char * argv[]) {
+    list<int> l;
+    list<int>::iterator it=l.begin();
+    clock_t start = clock();
+    for(int i=0;i!=100000000;++i)
+        l.insert(it,i);
+    clock_t finish = clock();
+    cout<<double(finish-start)/ CLOCKS_PER_SEC*1000 <<endl;
+    return 0;
+}
+```
+contianer            |quantity     |time(ms)    |
+---------------------|-------------|------------|
+Lwj_stl::Lwj_list    | 100,000     |4.385       |
+Lwj_stl::Lwj_list    | 1,000,000   |44.615      |
+Lwj_stl::Lwj_list    | 10,000,000  |439.551     |
+Lwj_stl::Lwj_list    | 100,000,000 |4612.19     |
+std::list            | 100,000     |12.741      |
+std::list            | 1,000,000   |130.051     |
+std::list            | 10,000,000  |1270.58     |
+std::list            | 100,000,000 |12868.2     |
