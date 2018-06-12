@@ -395,7 +395,21 @@ int main(int argc, const char * argv[]) {
 }
 ```
 ```cpp
-
+#include <time.h>
+#include <iostream>
+#include <queue>
+#include <list>
+#include <deque>
+using namespace std;
+int main(int argc, const char * argv[]) {
+    queue<int,list<int>> q;
+    clock_t start = clock();
+    for(int i=0;i!=100000;++i)
+        q.push(i);
+    clock_t finish = clock();
+    cout<<double(finish-start)/ CLOCKS_PER_SEC*1000 <<endl;
+    return 0;
+}
 ```
 adapter.                                         |quantity     |time(ms)    |
 -------------------------------------------------|-------------|------------|
