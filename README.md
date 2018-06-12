@@ -143,12 +143,12 @@ std::vector          | 1,000,000   |22.257      |
 std::vector          | 10,000,000  |265.646     |
 std::vector          | 100,000,000 |2408.51     |
 
-3.1 Lwj_list.h
+3.2 Lwj_list.h
 ------------------
 * [节点]
    * 包含一个指向前节点的指针，一个指向后节点的指针和数据
 * [迭代器]
-   * 包含一个指向节点的指针，实现== != * -> ++ -- 操作符
+   * 包含一个指向节点的指针，实现== != * -> ++ -- 操作符,Bidirectional Iterators
 * [容器类]
    * 成员变量：只包含一个指向节点的指针，因为list是环状双向链表。
    * 构造函数，析构函数
@@ -199,3 +199,49 @@ std::list            | 100,000     |12.741      |
 std::list            | 1,000,000   |130.051     |
 std::list            | 10,000,000  |1270.58     |
 std::list            | 100,000,000 |12868.2     |
+
+
+3.3 Lwj_deque.h
+------------------
+* [迭代器]
+   * 包含一个所指缓冲区现行元素的指针，一个所指缓冲区的头的指针，一个所指缓冲区的尾的指针，和一个指向管控中心的指针 Random Access Iterators
+   * ++ -- += -= 操作要考虑跳跃缓冲区
+* [容器类]
+   * 成员变量：包含一个表现第一个节点的迭代器和一个表现最后一个节点的迭代器
+   * 构造函数，析构函数
+   * 成员函数：begin,end,size,empty,back,front,push_back,,push_front,pop_back,pop_front,insert,clear,erase，reallocate_map
+* [性能测试] 测试环境:Xcode
+   * 测试代码如下
+   ```cpp
+#include <time.h>
+#include <iostream>
+#include "Lwj_deque.h"
+#include <deque>
+using namespace std;
+int main(int argc, const char * argv[]) {
+    Lwj_stl::Lwj_deque<int> d;
+    clock_t start = clock();
+    for(int i=0;i!=100000;++i)
+        d.push_front(i);
+    clock_t finish = clock();
+    cout<<double(finish-start)/ CLOCKS_PER_SEC*1000 <<endl;
+    return 0;
+}
+   ```
+   
+   ```cpp
+#include <time.h>
+#include <iostream>
+#include "Lwj_deque.h"
+#include <deque>
+using namespace std;
+int main(int argc, const char * argv[]) {
+    deque<int> d;
+    clock_t start = clock();
+    for(int i=0;i!=100000;++i)
+        d.push_front(i);
+    clock_t finish = clock();
+    cout<<double(finish-start)/ CLOCKS_PER_SEC*1000 <<endl;
+    return 0;
+}
+   ```
