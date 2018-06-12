@@ -265,8 +265,7 @@ std::deque           | 100,000,000 |2910.16     |
 * [容器类]
    * 成员变量：包含一个节点
    * 构造函数，析构函数
-   * 成员函数：begin,end,size,empty,back,front,push_front,pop_front,insert,clear，create_node,destroy_node,swap
-   
+   * 成员函数：begin,end,size,empty,back,front,push_front,pop_front,insert,clear，create_node,destroy_node,swap   
 * [性能测试] 测试环境:Xcode
    * 测试代码如下
 ```cpp
@@ -292,3 +291,78 @@ Lwj_stl::Lwj_deque   | 100,000     |2.931       |
 Lwj_stl::Lwj_deque   | 1,000,000   |29.414      |
 Lwj_stl::Lwj_deque   | 10,000,000  |292.182     |
 Lwj_stl::Lwj_deque   | 100,000,000 |3049.57     |
+
+3.5 Lwj_stack.h
+------------------
+* [后进先出]
+* [迭代器]
+   * 没有迭代器，因为stack允许新增元素，移除元素，但除了最顶端外，没有任何其他方法可以存取stack的其他元素，也就是说stack不允许有遍历行为。
+* [容器类]
+   * 以某种既有容器尾底部结构
+   * 成员函数：empty，size,top,push,pop,operator=,operator<
+* [性能测试] 测试环境:Xcode
+   * 测试代码如下
+```cpp
+#include <time.h>
+#include <iostream>
+#include "Lwj_stack.h"
+#include <stack>
+#include "Lwj_vector.h"
+#include "Lwj_list.h"
+#include "Lwj_deque.h"
+using namespace std;
+int main(int argc, const char * argv[]) {
+    Lwj_stl::Lwj_stack<int,Lwj_stl::Lwj_vector<int>> s;
+    clock_t start = clock();
+    for(int i=0;i!=100000;++i)
+        s.push(i);
+    clock_t finish = clock();
+    cout<<double(finish-start)/ CLOCKS_PER_SEC*1000 <<endl;
+    return 0;
+}
+```
+```cpp
+#include <time.h>
+#include <iostream>
+#include "Lwj_stack.h"
+#include <stack>
+#include <vector>
+#include <list>
+#include <deque>
+using namespace std;
+int main(int argc, const char * argv[]) {
+    stack<int,vector<int>> s;
+    clock_t start = clock();
+    for(int i=0;i!=100000000;++i)
+        s.push(i);
+    clock_t finish = clock();
+    cout<<double(finish-start)/ CLOCKS_PER_SEC*1000 <<endl;
+    return 0;
+}
+```
+adapter.                                         |quantity     |time(ms)    |
+-------------------------------------------------|-------------|------------|
+Lwj_stl::Lwj_stack<int,Lwj_stl::Lwj_vector<int>> | 100,000     |1.195       |
+Lwj_stl::Lwj_stack<int,Lwj_stl::Lwj_vector<int>> | 1,000,000   |11.505      |
+Lwj_stl::Lwj_stack<int,Lwj_stl::Lwj_vector<int>> | 10,000,000  |128.252     |
+Lwj_stl::Lwj_stack<int,Lwj_stl::Lwj_vector<int>> | 100,000,000 |1243.05     |
+Lwj_stl::Lwj_stack<int,Lwj_stl::Lwj_list<int>>   | 100,000     |4.703       |
+Lwj_stl::Lwj_stack<int,Lwj_stl::Lwj_list<int>>   | 1,000,000   |46.771      |
+Lwj_stl::Lwj_stack<int,Lwj_stl::Lwj_list<int>>   | 10,000,000  |457.986     |
+Lwj_stl::Lwj_stack<int,Lwj_stl::Lwj_list<int>>   | 100,000,000 |4917.9      | 
+Lwj_stl::Lwj_stack<int,Lwj_stl::Lwj_deque<int>>  | 100,000     |1.072       |
+Lwj_stl::Lwj_stack<int,Lwj_stl::Lwj_deque<int>>  | 1,000,000   |9.614       |
+Lwj_stl::Lwj_stack<int,Lwj_stl::Lwj_deque<int>>  | 10,000,000  |95.469      |
+Lwj_stl::Lwj_stack<int,Lwj_stl::Lwj_deque<int>>  | 100,000,000 |933.977     |   
+std::stack<int,std::vector<int>>                 | 100,000     |2.584       |
+std::stack<int,std::vector<int>>                 | 1,000,000   |22.847      |
+std::stack<int,std::vector<int>>                 | 10,000,000  |273.921     |
+std::stack<int,std::vector<int>>                 | 100,000,000 |2457.53     |
+std::stack<int,std::list<int>>                   | 100,000     |11.686      |
+std::stack<int,std::list<int>>                   | 1,000,000   |114.34      |
+std::stack<int,std::list<int>>                   | 10,000,000  |1157.76     |
+std::stack<int,std::list<int>>                   | 100,000,000 |11482.5     |
+std::stack<int,std::deque<int>>                  | 100,000     |3.705       |
+std::stack<int,std::deque<int>>                  | 1,000,000   |36.748      |
+std::stack<int,std::deque<int>>                  | 10,000,000  |367.485     |
+std::stack<int,std::deque<int>>                  | 100,000,000 |3600.53     |
